@@ -344,6 +344,13 @@ button.dt-record-toggle:focus-visible { outline: 2px solid var(--ring); outline-
 :root[data-ui-layout="modern"] :has(> .dt-composer-tray) .dt-composer-surface:focus-within {
   box-shadow: 0 0 0 1px rgb(var(--dt-ink) / 0.18), 0 1px 2px rgb(15 15 15 / 0.05), 0 4px 10px -4px rgb(15 15 15 / 0.11);
 }
+/* The tray tucks behind the box, so the box has to hide it. Translucent
+   themes (glass) give --card as a tint, which let the tray's top edge show
+   through; lay the tint on the page colour so the box is opaque in every
+   theme and unchanged in the solid ones. */
+:has(> .dt-composer-tray) .dt-composer-surface {
+  background: linear-gradient(var(--card), var(--card)), var(--background);
+}
 :root[data-ui-layout="modern"] .dt-composer-surface textarea,
 :root[data-ui-layout="modern"] .dt-composer-surface .dt-composer-lead { font-size: 15.5px; line-height: 1.6; letter-spacing: -0.003em; }
 :root[data-ui-layout="modern"] .dt-composer-surface textarea::placeholder { color: rgb(var(--dt-ink) / 0.4); }
