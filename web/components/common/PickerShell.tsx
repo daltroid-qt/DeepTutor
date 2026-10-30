@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import {
   AnimatePresence,
   m as motion,
@@ -279,7 +280,11 @@ export default function PickerShell({
           },
         };
 
-  return (
+  // Portaled to <body> so the scrim covers the page wherever the picker is
+  // mounted. An ancestor with a backdrop-filter or transform (the glass
+  // theme's surfaces) otherwise becomes the fixed overlay's containing block
+  // and stacking context, leaving it under the chat it is meant to cover.
+  const shell = (
     <AnimatePresence>
       {open && (
         <motion.div
@@ -344,4 +349,5 @@ export default function PickerShell({
       )}
     </AnimatePresence>
   );
+  return typeof document === "undefined" ? shell : createPortal(shell, document.body);
 }
