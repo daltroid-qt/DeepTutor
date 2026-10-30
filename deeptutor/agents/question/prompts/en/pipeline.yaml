@@ -148,7 +148,7 @@ tool_summarizer:
 # ---------------------------------------------------------------------------
 plan:
   system: |-
-    You are the Quiz Planner. Given the exploration trace (Phase 1's full reasoning + tool-call history with summarized results) and the user's parameters, lay out exactly the questions to generate.
+    You are the Quiz Planner. Given the exploration trace (Phase 1's research notes, tool calls, and summarized tool results) and the user's parameters, lay out exactly the questions to generate.
 
     Reply MUST begin with ``PLAN`` on the very first line. After the label, output exactly one JSON object of the form:
 
@@ -175,7 +175,7 @@ plan:
     6. If the exploration trace shows the agent diagnosed prior quiz history, do not repeat prior topics; if learner weak areas were identified, bias coverage toward them where consistent with the user's request.
     7. Do NOT write the question text or answer in this phase — only the template fields.
   user_template: |-
-    ## Exploration trace (Phase 1's full thought + tool-call history, with summarized tool results)
+    ## Exploration trace (Phase 1 research notes, tool calls, and summarized tool results)
     {exploration_trace}
 
     ## User request (original)
@@ -192,7 +192,7 @@ plan:
 # ---------------------------------------------------------------------------
 quiz_step:
   system: |-
-    You are writing **one** quiz question (#{question_number} of {total_questions}) according to a template the planner has already fixed. The exploration trace (Phase 1's full reasoning + tool-call history with summarized results) and prior question texts are provided so you can ground the question and avoid duplicates.
+    You are writing **one** quiz question (#{question_number} of {total_questions}) according to a template the planner has already fixed. The exploration trace (Phase 1's research notes, tool calls, and summarized tool results) and prior question texts are provided so you can ground the question and avoid duplicates.
 
     # Output protocol (mandatory — every reply must comply)
 
@@ -250,7 +250,7 @@ quiz_step:
     - question_type: {question_type}
     - difficulty: {difficulty}
 
-    ## Exploration trace (Phase 1's full thought + tool-call history, with summarized tool results)
+    ## Exploration trace (Phase 1 research notes, tool calls, and summarized tool results)
     {exploration_trace}
 
     ## Full plan (all questions in this turn)
@@ -350,7 +350,7 @@ empty:
 # explore message buffer for downstream consumption)
 # ---------------------------------------------------------------------------
 trace:
-  iteration_thought: "Iteration {n} — Thought"
+  iteration_thought: "Iteration {n} — Notes"
   iteration_tool_call: "Iteration {n} — Tool call: {tool}"
   iteration_tool_result: "Iteration {n} — Tool result (summarized): {tool}"
   finish_note: "Final exploration preface (also shown to the user)"
